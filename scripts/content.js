@@ -14,7 +14,12 @@ function getFramesInfo() {
 
     let frames = window.frames;
     for (let i = 0; i < frames.length; i++) {
-        framesInfo.push(getFrameInfo(frames[i]));
+        try {
+            framesInfo.push(getFrameInfo(frames[i]));
+        }
+        catch {
+            // We cannot access to iframe. Do nothing.
+        }
     }
 
     return framesInfo;
