@@ -41,6 +41,12 @@
     cursor: pointer;
 }
 
+.content__frame-title--empty:after {
+    content: "(no params)";
+    padding-left: 10px;
+    color: lightgray;
+}
+
 .content__frame-params {
     display: none;
     margin: 0;

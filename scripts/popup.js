@@ -37,7 +37,7 @@ function createContentInfo(framesInfo) {
 
     for (const frameInfo of framesInfo) {
         let contentFrameInfo = createContentFrameInfo(frameInfo);
-        if (contentFrameInfo.params.length)
+        if (contentFrameInfo.params.length || contentFrameInfo.title)
         {
             contentInfo.push(contentFrameInfo);
         }
@@ -78,6 +78,10 @@ function generateFrameInfo(frameInfo) {
     let frame = createListItem("content__frame");
 
     let title = createBlock("content__frame-title", frameInfo.title);
+    if (!frameInfo.params.length) {
+        title.classList.add("content__frame-title--empty");
+    }
+
     frame.appendChild(title);
 
     let params = generateFrameParams(frameInfo.params);
