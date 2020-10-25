@@ -24,7 +24,8 @@
 }
 
 .content__frame-title {
-    padding: 8px 10px;
+    position: relative;
+    padding: 8px 10px 8px 25px;
 
     font-weight: bold;
     color: var(--dark-color);
@@ -36,6 +37,23 @@
 
 .content__frame-title:hover {
     background-color: var(--light-color);
+}
+
+.content__frame-title:before {
+    position: absolute;
+    top: 4px;
+    left: 7px;
+
+    content: ">";
+
+    font-weight: bold;
+    font-size: 1.2rem;
+    transform: scaleX(0.7);
+    transition: 0.1s;
+}
+
+.content__frame-title--expanded:before {
+    transform: translate(2px, 3px) rotate(90deg) scaleX(0.7);
 }
 
 .content__frame-title--empty:after {

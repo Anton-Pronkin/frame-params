@@ -120,11 +120,17 @@ function generateFrameParam(paramInfo) {
 function initializeHandlers(container) {
     let titles = $(container).find(".content__frame-title").not(".content__frame-title--empty");
     titles.click(function() {
-        let visibleParams = titles.filter(":visible").not(this).next(); 
+        let visibleTitles = titles.filter(":visible").not(this);
+        visibleTitles.removeClass("content__frame-title--expanded");
+
+        let visibleParams = visibleTitles.next(); 
         visibleParams.hide("fast");
 
-        let currentParams = $(this).next();
-        currentParams.toggle("fast");
+        let currentTitle = $(this);
+        currentTitle.toggleClass("content__frame-title--expanded");
+
+        let currentParams = currentTitle.next();
+        currentParams.toggle("fast");        
     });
 
     let copyButtons = $(container).find(".content__copy-param-button");
