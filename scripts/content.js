@@ -1,17 +1,28 @@
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.action === 'openPopup') {
-        let frameUrls = getUrls();
-        sendResponse(frameUrls);
+        return openPopup(sendResponse);
     }
 });
 
-function getUrls() {
-    let urls = [document.location.href];
+function openPopup(sendResponse) {
+    let framesInfo = getFramesInfo();
+    sendResponse(framesInfo);
+}
+
+function getFramesInfo() {
+    let framesInfo = [getFrameInfo(document)];
 
     let frames = window.frames;
     for (let i = 0; i < frames.length; i++) {
-        urls.push(frames[i].location.href);
+        framesInfo.push(getFrameInfo(frames[i]));
     }
 
-    return urls;
+    return framesInfo;
+}
+
+function getFrameInfo(document) {
+    return {
+        title: document.title,
+        url: document.location.href
+    };
 }

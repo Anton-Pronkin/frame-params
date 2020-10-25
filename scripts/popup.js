@@ -1,21 +1,26 @@
-document.addEventListener("DOMContentLoaded", getUrls);
+document.addEventListener("DOMContentLoaded", getFramesInfoForActiveTab);
 
-function getUrls() {
+function getFramesInfoForActiveTab() {
     const tabsQuery = { 
         currentWindow: true, 
         active: true
     };
 
-    chrome.tabs.query(tabsQuery, function(tabs) {
-        let currentTabId = tabs[0].id;
-        let message = {  
-            action: 'openPopup'
-        };
-
-        chrome.tabs.sendMessage(currentTabId, message, generateUrls);
-    });
+    chrome.tabs.query(tabsQuery, getFramesInfo);
 }
 
-function generateUrls(urls) {
-    document.write(urls[0]);
+function getFramesInfo(tabs) {
+    let currentTabId = tabs[0].id;
+    let message = {  
+        action: 'openPopup'
+    };
+
+    chrome.tabs.sendMessage(currentTabId, message, generateFramesInfo);
+}
+
+function generateFramesInfo(framesInfo) {
+    for (const frameInfo of framesInfo) {
+        document.writeln(frameInfo.title);
+        document.writeln(frameInfo.url);
+    }
 }
