@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@500&display=swap');
+
+:root {
+    --primary-color: rgb(96, 184, 243);
+    --secondary-color: rgb(238, 248, 255);
+    --light-color: rgb(249, 252, 255);
+    --dark-color: rgb(47, 85, 134);
+
+    --primary-font-family: 'Titillium Web', sans-serif;
+}
+
+.content {
+    font-family: var(--primary-font-family);
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.content__frames {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.content__frame {
+    margin: 0 0 10px;
+    
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    
+    box-shadow: var(--dark-color) 0 1px 3px 1px;
+    background-color: var(--light-color);
+}
+
+.content__frame-title {
+    padding: 8px 10px;
+
+    color: white;
+    background-color: var(--primary-color);
+}
+
+.content__frame-params {
+    margin: 0;
+    padding: 0;
+
+    font-size: 0.9rem;
+    list-style: none;
+    white-space: nowrap;
+}
+
+.content__frame-param {
+    padding: 5px 10px;
+}
+
+.content__param-name {
+    display: inline-block;
+    width: 100px;
+    vertical-align: middle;
+}
+
+.content__param-name:after {
+    content: ":";
+}
+
+.content__param-value {
+    display: inline-block;
+    width: 160px;
+    padding: 5px;
+
+    border: 1px solid var(--primary-color);
+    border-radius: 3px;
+    
+    font-family: var(--primary-font-family);
+    background-color: var(--secondary-color);
+    vertical-align: middle;
+}
+
+.content__copy-param-button {
+    display: inline-block;
+    padding: 5px 10px;
+
+    border-radius: 3px;
+    vertical-align: middle;
+    
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    user-select: none;
+}
+
+.content__copy-param-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.content__copy-param-button:active {
+    padding: 6px 10px 4px;
+    background-color: var(--dark-color);
+}
