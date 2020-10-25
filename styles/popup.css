@@ -55,10 +55,13 @@
     transition: 0.1s;
 }
 
+.content__frame-title--expanded {
+    border-bottom: 2px solid transparent;
+}
+
 .content__frame-title--expanded:before {
     transform: translate(2px, 3px) rotate(90deg) scaleX(0.7);
 }
-
 
 .content__frame-title--empty:before {
     content: "×";
@@ -82,7 +85,7 @@
     font-size: 0.9rem;
     list-style: none;
     white-space: nowrap;
-    margin-top: 7px;
+    margin-top: 3px;
 }
 
 .content__frame-param {
