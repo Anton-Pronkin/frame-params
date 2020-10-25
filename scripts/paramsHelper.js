@@ -26,3 +26,8 @@ function getUrlParams(url)
 
 	return params;
 }
+
+function getUrlPage(url) {
+    let match = url.match(/.*:\/\/.*\/([^\?]*).*/);
+    return match && match[1];
+}

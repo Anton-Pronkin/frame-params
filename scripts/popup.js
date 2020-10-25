@@ -22,6 +22,8 @@ function generateFramesInfo(framesInfo) {
     let contentInfo = createContentInfo(framesInfo);
     let content = generateContent(contentInfo);
 
+    initializeHandlers(content);
+
     let container = document.body;
     container.appendChild(content);
 }
@@ -42,7 +44,7 @@ function createContentInfo(framesInfo) {
 
 function createContentFrameInfo(frameInfo) {
     return {
-        title: frameInfo.title,
+        title: frameInfo.title || getUrlPage(frameInfo.url),
         params: getUrlParams(frameInfo.url)
     };
 }
@@ -104,4 +106,10 @@ function generateFrameParam(paramInfo) {
     param.appendChild(copyButton);
 
     return param;
+}
+
+function initializeHandlers(container) {
+    $(container).find(".content__frame-title").click(function() {
+        $(this).parent().toggleClass("content__frame--expanded");
+    });
 }

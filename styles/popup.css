@@ -10,6 +10,7 @@
 .content {
     font-family: var(--primary-font-family);
     font-size: 1rem;
+    min-width: 400px;
 }
 
 .content__frames {
@@ -33,15 +34,21 @@
 
     color: white;
     background-color: var(--primary-color);
+    cursor: pointer;
 }
 
 .content__frame-params {
+    display: none;
     margin: 0;
     padding: 0;
 
     font-size: 0.9rem;
     list-style: none;
     white-space: nowrap;
+}
+
+.content__frame--expanded .content__frame-params {
+    display: block;
 }
 
 .content__frame-param {
@@ -60,7 +67,7 @@
 
 .content__param-value {
     display: inline-block;
-    width: 160px;
+    width: 200px;
     padding: 5px;
 
     border: 1px solid var(--primary-color);
