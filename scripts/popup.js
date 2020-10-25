@@ -97,6 +97,7 @@ function generateFrameParam(paramInfo) {
     let param = createListItem("content__frame-param");
 
     let paramName = createBlock("content__param-name", paramInfo.name);
+    paramName.setAttribute("title", paramInfo.name);
     param.appendChild(paramName);
 
     let paramValue = createInput("content__param-value", paramInfo.value);
