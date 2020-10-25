@@ -112,4 +112,11 @@ function initializeHandlers(container) {
     $(container).find(".content__frame-title").click(function() {
         $(this).parent().toggleClass("content__frame--expanded");
     });
+
+    $(container).find(".content__copy-param-button").click(function() {
+        let text = $(this).prev().val();
+        navigator.clipboard.writeText(text).then(function() {
+            window.close();
+        });
+    });
 }
