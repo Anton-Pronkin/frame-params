@@ -20,7 +20,7 @@ function getFramesInfo(tabs) {
 
 function generateFramesInfo(framesInfo) {
     if (!framesInfo) {
-        return;
+        window.close();
     }
 
     let contentInfo = createContentInfo(framesInfo);
