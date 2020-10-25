@@ -19,6 +19,10 @@ function getFramesInfo(tabs) {
 }
 
 function generateFramesInfo(framesInfo) {
+    if (!framesInfo) {
+        return;
+    }
+
     let contentInfo = createContentInfo(framesInfo);
     let content = generateContent(contentInfo);
 
