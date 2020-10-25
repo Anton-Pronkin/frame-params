@@ -9,15 +9,12 @@
           "24": "images/icon24.png",
           "32": "images/icon32.png"
         },
-        "default_title": "Take a look at the query parameters."
+        "default_title": "Take a look at the query parameters.",
+        "default_popup": "popup.html"
     },
-    "background": {
-        "scripts": ["scripts/background.js"],
-        "persistent": false
-      },
     "content_scripts": [{
         "matches": ["*://*/*"],
         "js": ["scripts/content.js"]
       }],
-    "permissions": ["activeTab"]
+    "permissions": ["tabs"]
 }
