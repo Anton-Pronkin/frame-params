@@ -2,5 +2,12 @@
     "name": "Frame params",
     "version": "0.1",
     "description": "Take a look at the query parameters for all frames on the page.",
-    "manifest_version": 2
+    "manifest_version": 2,
+    "browser_action": {
+        "default_icon": {
+          "16": "images/icon16.png",
+          "24": "images/icon24.png",
+          "32": "images/icon32.png"
+        }
+    }
 }
