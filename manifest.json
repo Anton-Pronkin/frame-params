@@ -1,0 +1,6 @@
+{
+    "name": "Frame params",
+    "version": "0.1",
+    "description": "Take a look at the query parameters for all frames on the page.",
+    "manifest_version": 2
+}
