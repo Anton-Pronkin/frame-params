@@ -118,11 +118,17 @@ function generateFrameParam(paramInfo) {
 }
 
 function initializeHandlers(container) {
-    $(container).find(".content__frame-title").click(function() {
-        $(this).parent().toggleClass("content__frame--expanded");
+    let titles = $(container).find(".content__frame-title").not(".content__frame-title--empty");
+    titles.click(function() {
+        let visibleParams = titles.filter(":visible").not(this).next(); 
+        visibleParams.hide("fast");
+
+        let currentParams = $(this).next();
+        currentParams.toggle("fast");
     });
 
-    $(container).find(".content__copy-param-button").click(function() {
+    let copyButtons = $(container).find(".content__copy-param-button");
+    copyButtons.click(function() {
         let text = $(this).prev().val();
         navigator.clipboard.writeText(text).then(function() {
             window.close();
