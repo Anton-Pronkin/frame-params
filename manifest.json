@@ -8,6 +8,8 @@
           "16": "images/icon16.png",
           "24": "images/icon24.png",
           "32": "images/icon32.png"
-        }
+        },
+        "default_title": "Take a look at the query parameters.",
+        "default_popup": "popup.html"
     }
 }
