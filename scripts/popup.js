@@ -48,7 +48,8 @@ function createContentInfo(framesInfo) {
 
 function createContentFrameInfo(frameInfo) {
     return {
-        title: frameInfo.title || getUrlPage(frameInfo.url),
+        title: frameInfo.title,
+        page: getUrlPage(frameInfo.url),
         params: getUrlParams(frameInfo.url)
     };
 }
@@ -78,7 +79,7 @@ function generateFrameInfo(frameInfo) {
     let frame = createListItem("content__frame");
 
     let title = createBlock("content__frame-title", frameInfo.title);
-    title.setAttribute("title", frameInfo.title);
+    title.setAttribute("title", frameInfo.page);
     if (!frameInfo.params.length) {
         title.classList.add("content__frame-title--empty");
     }
