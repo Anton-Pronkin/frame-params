@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", getFramesInfoForActiveTab);
+$(document).ready(getFramesInfoForActiveTab);
 
 function getFramesInfoForActiveTab() {
     const tabsQuery = { 
