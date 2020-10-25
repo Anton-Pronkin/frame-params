@@ -78,6 +78,7 @@ function generateFrameInfo(frameInfo) {
     let frame = createListItem("content__frame");
 
     let title = createBlock("content__frame-title", frameInfo.title);
+    title.setAttribute("title", frameInfo.title);
     if (!frameInfo.params.length) {
         title.classList.add("content__frame-title--empty");
     }

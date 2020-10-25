@@ -33,6 +33,9 @@
     cursor: pointer;
     border-bottom: 2px solid var(--pattern-color);
     user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .content__frame-title:hover {
@@ -56,10 +59,17 @@
     transform: translate(2px, 3px) rotate(90deg) scaleX(0.7);
 }
 
+
+.content__frame-title--empty:before {
+    content: "×";
+    transform: scale(1);
+}
+
 .content__frame-title--empty:after {
     content: "(no params)";
     padding-left: 10px;
     
+    font-weight: normal;
     color: rgb(192, 192, 192);
     white-space: nowrap;
 }
