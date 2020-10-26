@@ -101,6 +101,10 @@
     text-overflow: ellipsis;
 }
 
+.content__param-name--highlighted {
+    font-weight: bold;
+}
+
 .content__param-name:after {
     content: ":";
 }

@@ -1,19 +1,34 @@
-$(document).ready(initialize);
+$(document).ready(async function() {
 
-function initialize() {
-    $(".option-panel__save-button").click(saveOptions);
-}
+    const checkboxes = {
+        paramsHighlighting: $(".option-panel__checkbox-option--params-highlighting .checkbox__input")
+    }
 
-function saveOptions() {
-    let options = {}; 
-    chrome.storage.local.set(options, function() {
-        // Options are saved
+    $(".option-panel__save-button").click(async function () {
+        await saveOptions();
+        close();
     });
-}
 
-function loadOptions() {
-    let options = {};
-    chrome.storage.local.get(options, function(userOptions) {
-        // Apply options from userOptions
-    });
-}
+    await loadOptions();
+
+
+    async function saveOptions() {
+        await setValue(checkboxes.paramsHighlighting, OptionManager.setParamsHighlightingOption);
+    }
+
+    async function loadOptions() {
+        await setCheckbox(checkboxes.paramsHighlighting, OptionManager.getParamsHighlightingOption);
+    }
+
+    async function setValue(checkbox, setValue) {
+        await setValue(checkbox.is(':checked'));
+    }
+
+    async function setCheckbox(checkbox, getValue) {
+        if (await getValue()) {
+            checkbox.attr('checked', 'checked');
+        }
+    }
+});
+
+

@@ -108,6 +108,12 @@ $(document).ready(async function() {
 
         let paramName = createBlock("content__param-name", paramInfo.name);
         paramName.setAttribute("title", paramInfo.name);
+
+        let needHighlight = paramInfo.name && paramInfo.name.toLowerCase().endsWith("id");
+        if (needHighlight && await OptionManager.getParamsHighlightingOption()) {
+            paramName.classList.add("content__param-name--highlighted");
+        }
+
         param.appendChild(paramName);
 
         let paramValue = createInput("content__param-value", paramInfo.value);
