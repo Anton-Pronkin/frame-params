@@ -1,6 +1,7 @@
 class OptionManager {
     static #optionNames = {
-        paramsHighlighting: "params-highlighting"
+        paramsHighlighting: "params-highlighting",
+        paramsSorting: "params-sorting"
     }
 
     static async getParamsHighlightingOption() {
@@ -9,6 +10,14 @@ class OptionManager {
 
     static async setParamsHighlightingOption(value) {
         await OptionManager.#setOption(OptionManager.#optionNames.paramsHighlighting, value);
+    }
+
+    static async getParamsSortingOption() {
+        return await OptionManager.#getOption(OptionManager.#optionNames.paramsSorting, false);
+    }
+
+    static async setParamsSortingOption(value) {
+        await OptionManager.#setOption(OptionManager.#optionNames.paramsSorting, value);
     }
 
     static async #getOption(optionName, defaultValue) {

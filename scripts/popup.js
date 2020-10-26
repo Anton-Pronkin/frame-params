@@ -24,7 +24,7 @@ $(document).ready(async function() {
             window.close();
         }
 
-        let contentInfo = createContentInfo(framesInfo);
+        let contentInfo = await createContentInfo(framesInfo);
         let content = await generateContent(contentInfo);
         initializeHandlers(content);
 
@@ -32,13 +32,21 @@ $(document).ready(async function() {
         container.appendChild(content);
     }
 
-    function createContentInfo(framesInfo) {
+    async function createContentInfo(framesInfo) {
         let contentInfo = [];
 
         for (const frameInfo of framesInfo) {
             let contentFrameInfo = createContentFrameInfo(frameInfo);
             if (contentFrameInfo.params.length || contentFrameInfo.title)
             {
+                if (await OptionManager.getParamsSortingOption()) {
+                    contentFrameInfo.params.sort(function(paramX, paramY) {
+                        let x = paramX.name.toLowerCase();
+                        let y = paramY.name.toLowerCase();
+                        return x < y ? -1 : x > y ? 1 : 0;
+                    });
+                }
+
                 contentInfo.push(contentFrameInfo);
             }
         }
