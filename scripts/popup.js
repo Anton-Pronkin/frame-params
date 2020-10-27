@@ -1,145 +1,171 @@
-$(document).ready(getFramesInfoForActiveTab);
-
-function getFramesInfoForActiveTab() {
+$(document).ready(async function() {
+    
     const tabsQuery = { 
         currentWindow: true, 
         active: true
     };
 
-    chrome.tabs.query(tabsQuery, getFramesInfo);
-}
-
-function getFramesInfo(tabs) {
+    let tabs = await chrome.tabs.query(tabsQuery);
     let currentTabId = tabs[0].id;
-    let message = {  
-        action: 'openPopup'
-    };
 
-    chrome.tabs.sendMessage(currentTabId, message, generateFramesInfo);
-}
+    await getFramesInfo(currentTabId);
 
-function generateFramesInfo(framesInfo) {
-    if (!framesInfo) {
-        window.close();
+    async function getFramesInfo(tab) {
+        let message = {  
+            action: 'openPopup'
+        };
+
+        let framesInfo = await chrome.tabs.sendMessage(tab, message);
+        await generateFramesInfo(framesInfo);
     }
 
-    let contentInfo = createContentInfo(framesInfo);
-    let content = generateContent(contentInfo);
+    async function generateFramesInfo(framesInfo) {
+        if (!framesInfo) {
+            window.close();
+        }
 
-    initializeHandlers(content);
+        let contentInfo = await createContentInfo(framesInfo);
+        let content = await generateContent(contentInfo);
+        initializeHandlers(content);
 
-    let container = document.body;
-    container.appendChild(content);
-}
+        let container = document.body;
+        container.appendChild(content);
+    }
 
-function createContentInfo(framesInfo) {
-    let contentInfo = [];
+    async function createContentInfo(framesInfo) {
+        let contentInfo = [];
 
-    for (const frameInfo of framesInfo) {
-        let contentFrameInfo = createContentFrameInfo(frameInfo);
-        if (contentFrameInfo.params.length || contentFrameInfo.title)
-        {
+        for (const frameInfo of framesInfo) {
+            let contentFrameInfo = createContentFrameInfo(frameInfo);
+
+            if (contentFrameInfo.params.length == 0) {
+                if (await OptionManager.getEmptyFramesHidingOption()) {
+                    continue;
+                }
+            }
+            if (!contentFrameInfo.title && !contentFrameInfo.page) {
+                continue;
+            }
+
+            if (await OptionManager.getParamsSortingOption()) {
+                contentFrameInfo.params.sort(function(paramX, paramY) {
+                    let x = paramX.name.toLowerCase();
+                    let y = paramY.name.toLowerCase();
+                    return x < y ? -1 : x > y ? 1 : 0;
+                });
+            }
+
             contentInfo.push(contentFrameInfo);
         }
+
+        return contentInfo;
     }
 
-    return contentInfo;
-}
-
-function createContentFrameInfo(frameInfo) {
-    return {
-        title: frameInfo.title,
-        page: getUrlPage(frameInfo.url),
-        params: getUrlParams(frameInfo.url)
-    };
-}
-
-
-function generateContent(framesInfo) {
-    let content = createBlock("content");
-
-    let frames = generateFrames(framesInfo);
-    content.appendChild(frames);
-
-    return content;
-}
-
-function generateFrames(framesInfo) {
-    let frames = createList("content__frames");
-
-    for (const frameInfo of framesInfo) {
-        let frame = generateFrameInfo(frameInfo);
-        frames.appendChild(frame);
+    function createContentFrameInfo(frameInfo) {
+        return {
+            title: frameInfo.title,
+            page: getUrlPage(frameInfo.url),
+            params: getUrlParams(frameInfo.url)
+        };
     }
 
-    return frames;
-}
 
-function generateFrameInfo(frameInfo) {
-    let frame = createListItem("content__frame");
+    async function generateContent(framesInfo) {
+        let content = createBlock("content");
 
-    let title = createBlock("content__frame-title", frameInfo.title);
-    title.setAttribute("title", frameInfo.page);
-    if (!frameInfo.params.length) {
-        title.classList.add("content__frame-title--empty");
+        let frames = await generateFrames(framesInfo);
+        content.appendChild(frames);
+
+        return content;
     }
 
-    frame.appendChild(title);
+    async function generateFrames(framesInfo) {
+        let frames = createList("content__frames");
 
-    let params = generateFrameParams(frameInfo.params);
-    frame.appendChild(params);
+        for (const frameInfo of framesInfo) {
+            let frame = await generateFrameInfo(frameInfo);
+            frames.appendChild(frame);
+        }
 
-    return frame;
-}
-
-function generateFrameParams(paramsInfo) {
-    let params = createList("content__frame-params");
-
-    for (const paramInfo of paramsInfo) {
-        let param = generateFrameParam(paramInfo);
-        params.appendChild(param);
+        return frames;
     }
 
-    return params;
-}
+    async function generateFrameInfo(frameInfo) {
+        let frame = createListItem("content__frame");
 
-function generateFrameParam(paramInfo) {
-    let param = createListItem("content__frame-param");
+        let [frameTitle, titleAttribute] = await OptionManager.getPageUrlDisplayingOption() ? 
+            [frameInfo.page, frameInfo.title] : 
+            [frameInfo.title, frameInfo.page];
 
-    let paramName = createBlock("content__param-name", paramInfo.name);
-    paramName.setAttribute("title", paramInfo.name);
-    param.appendChild(paramName);
+        let title = createBlock("content__frame-title", frameTitle);
+        title.setAttribute("title", titleAttribute);
+        if (!frameInfo.params.length) {
+            title.classList.add("content__frame-title--empty");
+        }
 
-    let paramValue = createInput("content__param-value", paramInfo.value);
-    param.appendChild(paramValue);
+        frame.appendChild(title);
 
-    let copyButton = createBlock("content__copy-param-button", "Copy");
-    param.appendChild(copyButton);
+        let params = await generateFrameParams(frameInfo.params);
+        frame.appendChild(params);
 
-    return param;
-}
+        return frame;
+    }
 
-function initializeHandlers(container) {
-    let titles = $(container).find(".content__frame-title").not(".content__frame-title--empty");
-    titles.click(function() {
-        let visibleTitles = titles.filter(":visible").not(this);
-        visibleTitles.removeClass("content__frame-title--expanded");
+    async function generateFrameParams(paramsInfo) {
+        let params = createList("content__frame-params");
 
-        let visibleParams = visibleTitles.next(); 
-        visibleParams.hide("fast");
+        for (const paramInfo of paramsInfo) {
+            let param = await generateFrameParam(paramInfo);
+            params.appendChild(param);
+        }
 
-        let currentTitle = $(this);
-        currentTitle.toggleClass("content__frame-title--expanded");
+        return params;
+    }
 
-        let currentParams = currentTitle.next();
-        currentParams.toggle("fast");        
-    });
+    async function generateFrameParam(paramInfo) {
+        let param = createListItem("content__frame-param");
 
-    let copyButtons = $(container).find(".content__copy-param-button");
-    copyButtons.click(function() {
-        let text = $(this).prev().val();
-        navigator.clipboard.writeText(text).then(function() {
-            window.close();
+        let paramName = createBlock("content__param-name", paramInfo.name);
+        paramName.setAttribute("title", paramInfo.name);
+
+        let needHighlight = paramInfo.name && paramInfo.name.toLowerCase().endsWith("id");
+        if (needHighlight && await OptionManager.getParamsHighlightingOption()) {
+            paramName.classList.add("content__param-name--highlighted");
+        }
+
+        param.appendChild(paramName);
+
+        let paramValue = createInput("content__param-value", paramInfo.value);
+        param.appendChild(paramValue);
+
+        let copyButton = createBlock("content__copy-param-button", "Copy");
+        param.appendChild(copyButton);
+
+        return param;
+    }
+
+    function initializeHandlers(container) {
+        let titles = $(container).find(".content__frame-title").not(".content__frame-title--empty");
+        titles.click(function() {
+            let visibleTitles = titles.filter(":visible").not(this);
+            visibleTitles.removeClass("content__frame-title--expanded");
+
+            let visibleParams = visibleTitles.next(); 
+            visibleParams.hide("fast");
+
+            let currentTitle = $(this);
+            currentTitle.toggleClass("content__frame-title--expanded");
+
+            let currentParams = currentTitle.next();
+            currentParams.toggle("fast");        
         });
-    });
-}
+
+        let copyButtons = $(container).find(".content__copy-param-button");
+        copyButtons.click(function() {
+            let text = $(this).prev().val();
+            navigator.clipboard.writeText(text).then(function() {
+                window.close();
+            });
+        });
+    }
+});
