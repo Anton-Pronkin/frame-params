@@ -37,18 +37,25 @@ $(document).ready(async function() {
 
         for (const frameInfo of framesInfo) {
             let contentFrameInfo = createContentFrameInfo(frameInfo);
-            if (contentFrameInfo.params.length || contentFrameInfo.title)
-            {
-                if (await OptionManager.getParamsSortingOption()) {
-                    contentFrameInfo.params.sort(function(paramX, paramY) {
-                        let x = paramX.name.toLowerCase();
-                        let y = paramY.name.toLowerCase();
-                        return x < y ? -1 : x > y ? 1 : 0;
-                    });
-                }
 
-                contentInfo.push(contentFrameInfo);
+            if (contentFrameInfo.params.length == 0) {
+                if (await OptionManager.getEmptyFramesHidingOption()) {
+                    continue;
+                }
             }
+            if (!contentFrameInfo.title && !contentFrameInfo.page) {
+                continue;
+            }
+
+            if (await OptionManager.getParamsSortingOption()) {
+                contentFrameInfo.params.sort(function(paramX, paramY) {
+                    let x = paramX.name.toLowerCase();
+                    let y = paramY.name.toLowerCase();
+                    return x < y ? -1 : x > y ? 1 : 0;
+                });
+            }
+
+            contentInfo.push(contentFrameInfo);
         }
 
         return contentInfo;

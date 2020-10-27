@@ -1,7 +1,16 @@
 class OptionManager {
     static #optionNames = {
         paramsHighlighting: "params-highlighting",
-        paramsSorting: "params-sorting"
+        paramsSorting: "params-sorting",
+        emptyFramesHiding: "empty-frames-hiding"
+    }
+
+    static async getEmptyFramesHidingOption() {
+        return await OptionManager.#getOption(OptionManager.#optionNames.emptyFramesHiding, false);
+    }
+
+    static async setEmptyFramesHidingOption(value) {
+        await OptionManager.#setOption(OptionManager.#optionNames.emptyFramesHiding, value);
     }
 
     static async getParamsHighlightingOption() {
