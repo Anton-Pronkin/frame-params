@@ -93,8 +93,12 @@ $(document).ready(async function() {
     async function generateFrameInfo(frameInfo) {
         let frame = createListItem("content__frame");
 
-        let title = createBlock("content__frame-title", frameInfo.title);
-        title.setAttribute("title", frameInfo.page);
+        let [frameTitle, titleAttribute] = await OptionManager.getPageUrlDisplayingOption() ? 
+            [frameInfo.page, frameInfo.title] : 
+            [frameInfo.title, frameInfo.page];
+
+        let title = createBlock("content__frame-title", frameTitle);
+        title.setAttribute("title", titleAttribute);
         if (!frameInfo.params.length) {
             title.classList.add("content__frame-title--empty");
         }

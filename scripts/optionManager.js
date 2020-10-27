@@ -2,7 +2,16 @@ class OptionManager {
     static #optionNames = {
         paramsHighlighting: "params-highlighting",
         paramsSorting: "params-sorting",
-        emptyFramesHiding: "empty-frames-hiding"
+        emptyFramesHiding: "empty-frames-hiding",
+        pageUrlDisplaying: "page-url-displaying"
+    }
+
+    static async getPageUrlDisplayingOption() {
+        return await OptionManager.#getOption(OptionManager.#optionNames.pageUrlDisplaying, false);
+    }
+
+    static async setPageUrlDisplayingOption(value) {
+        await OptionManager.#setOption(OptionManager.#optionNames.pageUrlDisplaying, value);
     }
 
     static async getEmptyFramesHidingOption() {
