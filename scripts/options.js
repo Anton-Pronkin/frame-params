@@ -1,43 +1,42 @@
-$(document).ready(async function() {
-
-    const checkboxes = {
-        paramsHighlighting: $(".option-panel__checkbox-option--params-highlighting .checkbox__input"),
-        paramsSorting: $(".option-panel__checkbox-option--params-sorting .checkbox__input"),
-        emptyFramesHiding: $(".option-panel__checkbox-option--empty-frames-hiding .checkbox__input"),
-        pageUrlDisplaying: $(".option-panel__checkbox-option--page-url-displaying .checkbox__input"),
+const baseOptions = [
+    {
+        name: OptionManager.optionNames.paramsHighlighting,
+        caption: "Highlight names of params that equal \"id\" or ends with \"id\""
+    }, 
+    {
+        name: OptionManager.optionNames.paramsSorting,
+        caption: "Sort params alphabetically"
+    }, 
+    {
+        name: OptionManager.optionNames.emptyFramesHiding,
+        caption: "Hide frames that have no params"
+    }, 
+    {
+        name: OptionManager.optionNames.pageUrlDisplaying,
+        caption: "Show page URL instead of the page title"
     }
+];
 
-    $(".option-panel__save-button").click(async function () {
-        await saveOptions();
-        close();
+let render = async () => {
+    let options = await OptionPreparer.process(baseOptions);
+
+    const controller = new ComponentsController({
+        root: document.getElementById("options-content"),
+        mainComponent:  new OptionPage({
+            options: options, 
+            saveOptions: saveOptions
+        })
     });
 
-    await loadOptions();
+    controller.renderComponents();
 
-
-    async function saveOptions() {
-        await setValue(checkboxes.paramsHighlighting, OptionManager.setParamsHighlightingOption);
-        await setValue(checkboxes.paramsSorting, OptionManager.setParamsSortingOption);
-        await setValue(checkboxes.emptyFramesHiding, OptionManager.setEmptyFramesHidingOption);
-        await setValue(checkboxes.pageUrlDisplaying, OptionManager.setPageUrlDisplayingOption);
-    }
-
-    async function loadOptions() {
-        await setCheckbox(checkboxes.paramsHighlighting, OptionManager.getParamsHighlightingOption);
-        await setCheckbox(checkboxes.paramsSorting, OptionManager.getParamsSortingOption);
-        await setCheckbox(checkboxes.emptyFramesHiding, OptionManager.getEmptyFramesHidingOption);
-        await setCheckbox(checkboxes.pageUrlDisplaying, OptionManager.getPageUrlDisplayingOption);
-    }
-
-    async function setValue(checkbox, setValue) {
-        await setValue(checkbox.is(':checked'));
-    }
-
-    async function setCheckbox(checkbox, getValue) {
-        if (await getValue()) {
-            checkbox.attr('checked', 'checked');
+    async function saveOptions(options) {
+        for (const option of options) {
+            await OptionManager.set(option.name, option.checked);
         }
+
+        close();
     }
-});
+};
 
-
+render();

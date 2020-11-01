@@ -1,0 +1,27 @@
+.option-page {
+    text-align: center;
+}
+
+.option-page__save-button {
+    display: inline-block;
+    padding: 10px 20px;
+
+    border-radius: 3px;
+
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    font-size: 1rem;
+    
+    cursor: pointer;
+    user-select: none;
+}
+
+.option-page__save-button:hover {
+    color: white;
+    background-color: var(--pattern-color);
+}
+
+.option-page__save-button:active {
+    padding: 11px 20px 9px;
+    background-color: var(--dark-color);
+}
