@@ -1,10 +1,4 @@
 class OptionList extends ComponentBase {
-    static #elements = {
-        checkboxOption: "checkbox-option",
-        checkbox: "checkbox",
-        params: "params"
-    }
-
     #options = null;
 
     constructor ({options}) {
@@ -28,11 +22,8 @@ class OptionList extends ComponentBase {
         return optionsHtml;
     }
 
-    #renderOption({caption, checked, name}) {
-        return `
-            <div class="${this.bem(OptionList.#elements.checkboxOption)}" option-name="${name}">
-                ${new Checkbox({caption, checked}).render()}
-            </div>`;
+    #renderOption(option) {
+        return new Option({option}).render();
     }
 
     static getOptions(container) {
