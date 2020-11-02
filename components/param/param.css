@@ -1,0 +1,56 @@
+.param__container {
+    padding: 3px 10px;
+}
+
+.param__name {
+    display: inline-block;
+    width: 80px;
+    
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.param__name--highlighted {
+    font-weight: bold;
+}
+
+.param__name:after {
+    content: ":";
+}
+
+.param__value {
+    display: inline-block;
+    width: 225px;
+    padding: 5px;
+
+    border: 1px solid var(--light-color);
+    border-radius: 3px;
+    
+    font-family: var(--primary-font-family);
+    background-color: var(--light-color);
+    vertical-align: middle;
+}
+
+.param__copy-button {
+    display: inline-block;
+    margin-left: 7px;
+    padding: 5px 10px;
+
+    border-radius: 3px;
+    vertical-align: middle;
+    
+    cursor: pointer;
+    background-color: var(--light-color);
+    user-select: none;
+}
+
+.param__copy-button:hover {
+    background-color: var(--pattern-color);
+    color: white;
+}
+
+.param__copy-button:active {
+    padding: 6px 10px 4px;
+    background-color: var(--dark-color);
+}
