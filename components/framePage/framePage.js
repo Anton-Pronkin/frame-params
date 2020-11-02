@@ -3,18 +3,18 @@ class FramePage extends ComponentBase {
         emptyMessage: "empty-message"
     }
 
-    #frames = null;
-    
+    #frames;
+
     constructor ({frames}) {
         super({
             name: "frame-page"
         });
 
-        this.#frames = frames;
+        this.#frames = new FrameList({frames});
     }
 
     renderComponent() {
-        if (this.#frames.length) {
+        if (this.#frames.items.length) {
             return this.#renderPage();
         }
 
@@ -22,7 +22,6 @@ class FramePage extends ComponentBase {
     }
 
     #renderPage() {
-        let frameList = new FrameList({ frames: this.#frames });
-        return frameList.render();
+        return this.#frames.render();
     }
 }

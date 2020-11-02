@@ -1,0 +1,57 @@
+.frame__title {
+    position: relative;
+    padding: 8px 10px 8px 25px;
+
+    font-weight: bold;
+    color: var(--dark-color);
+
+    cursor: pointer;
+    border-bottom: 2px solid var(--pattern-color);
+    user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.frame__title:hover {
+    background-color: var(--light-color);
+}
+
+.frame__title:before {
+    position: absolute;
+    top: 4px;
+    left: 7px;
+
+    content: ">";
+
+    font-weight: bold;
+    font-size: 1.2rem;
+    transform: scaleX(0.7);
+    transition: 0.1s;
+}
+
+.frame__container--expanded .frame__title {
+    border-bottom: 2px solid transparent;
+}
+
+.frame__container--expanded .frame__title:before {
+    transform: translate(2px, 3px) rotate(90deg) scaleX(0.7);
+}
+
+.frame__container--empty .frame__title:before {
+    content: "×";
+    transform: scale(1);
+}
+
+.frame__container--empty .frame__title:after {
+    content: "(no params)";
+    padding-left: 10px;
+    
+    font-weight: normal;
+    color: rgb(192, 192, 192);
+    white-space: nowrap;
+}
+
+.frame__params {
+    display: none;
+}

@@ -1,63 +1,6 @@
 .param-list {
     font-size: 0.9rem;
-    list-style: none;
     white-space: nowrap;
     padding: 0;
-}
-
-.param-list__param-item {
-    padding: 3px 10px;
-}
-
-.param-list__param-name {
-    display: inline-block;
-    width: 80px;
-    
-    vertical-align: middle;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.param-list__param-name--highlighted {
-    font-weight: bold;
-}
-
-.param-list__param-name:after {
-    content: ":";
-}
-
-.param-list__param-value {
-    display: inline-block;
-    width: 225px;
-    padding: 5px;
-
-    border: 1px solid var(--light-color);
-    border-radius: 3px;
-    
-    font-family: var(--primary-font-family);
-    background-color: var(--light-color);
-    vertical-align: middle;
-}
-
-.param-list__copy-param-button {
-    display: inline-block;
-    margin-left: 7px;
-    padding: 5px 10px;
-
-    border-radius: 3px;
-    vertical-align: middle;
-    
-    cursor: pointer;
-    background-color: var(--light-color);
-    user-select: none;
-}
-
-.param-list__copy-param-button:hover {
-    background-color: var(--pattern-color);
-    color: white;
-}
-
-.param-list__copy-param-button:active {
-    padding: 6px 10px 4px;
-    background-color: var(--dark-color);
+    margin: 5px 0 0;
 }

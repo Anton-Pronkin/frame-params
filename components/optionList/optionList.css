@@ -1,9 +1,0 @@
-.option-list {
-    font-family: var(--primary-font-family);
-    text-align: center;
-}
-
-.option-list__checkbox-option {
-    padding: 0 15px;
-    margin-bottom: 10px;
-}

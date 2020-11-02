@@ -4,16 +4,16 @@ class OptionPage extends ComponentBase {
         saveButton: "save-button"
     }
 
-    #options = null;
-    static #saveOptions = null;
+    #options;
+    #onSaveClick;
     
-    constructor ({options, saveOptions}) {
+    constructor ({options, onSaveClick}) {
         super({
             name: "option-page"
         });
 
-        this.#options = options;
-        OptionPage.#saveOptions = saveOptions;
+        this.#options = new OptionList({options});
+        this.#onSaveClick = onSaveClick;
     }
 
     renderComponent() {
@@ -21,16 +21,13 @@ class OptionPage extends ComponentBase {
     }
 
     #renderPage() {
-        let optionList = new OptionList({ options: this.#options });
         return `
-            <div class="${this.bem(OptionPage.#elements.options)}">${optionList.render()}</div>
-            <div class="${this.bem(OptionPage.#elements.saveButton)}" click-handler="${OptionPage.saveClick.name}">Save</div>`;
+            <div class="${this.bem(OptionPage.#elements.options)}">${this.#options.render()}</div>
+            <div class="${this.bem(OptionPage.#elements.saveButton)}" click-handler="${this.saveClick.name}">Save</div>`;
     }
 
-    static saveClick({target}) {
-        let component = ComponentBase.component(target);
-
-        let options = OptionList.getOptions(component);
-        OptionPage.#saveOptions(options);
+    saveClick() {
+        let options = this.#options.getOptions();
+        this.#onSaveClick?.(options);
     }
 }

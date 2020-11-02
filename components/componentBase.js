@@ -9,10 +9,10 @@ class ComponentBase {
 
     constructor({tag, name}) {
         this.#componentTag = tag || "div";
-        this.#componentName = name || this.#componentId;
+        this.#componentName = name || "unknown";
         this.#componentId = this.#generateUniqueId(); 
 
-        ComponentBase.#components.set(this.#componentName, this.constructor);
+        ComponentBase.#components.set(this.#componentId, this);
     }
 
     render() {
@@ -29,28 +29,38 @@ class ComponentBase {
         return ComponentBase.bem(this.#componentName, element, modifier);
     }
 
+    static bem(block, element, modifier) {
+        const elementSeparator = "__";
+        const modifierSeparator = "--";
+
+        const elementName = block + elementSeparator + element;
+        return !modifier ? elementName : elementName + modifierSeparator + modifier;
+    }
+
+    element(element, modifier) {
+        let root = this.getComponentRoot();
+        return element ? root.find(`.${this.bem(element, modifier)}`) : root;
+    }
+
+    getComponentRoot() {
+        return $(document).find(`#${this.#componentId}`);
+    }
+
     #generateUniqueId() {
         let regularId = ComponentBase.#componentsCount++;
         return `${ComponentBase.#componentIdPrefix}${this.#componentName}-${regularId}`;
     }
 
-    static component(element) {
-        return $(element).closest(`[id^=${ComponentBase.#componentIdPrefix}]`);
+    static getComponentByElement(element) {
+        let componentId = ComponentBase.getComponentIdByElement(element);
+        return ComponentBase.getComponent(componentId);
     }
 
-    static componentName(element) {
-        return ComponentBase.component(element).attr('class');
+    static getComponentIdByElement(element) {
+        return $(element).closest(`[id^=${ComponentBase.#componentIdPrefix}]`).attr("id");
     }
 
-    static bem(component, element, modifier) {
-        const elementSeparator = "__";
-        const modifierSeparator = "--";
-
-        const elementName = component + elementSeparator + element;
-        return !modifier ? elementName : elementName + modifierSeparator + modifier;
-    }
-
-    static getComponent(name) {
-        return ComponentBase.#components.get(name);
+    static getComponent(componentId) {
+        return ComponentBase.#components.get(componentId);
     }
 }

@@ -27,14 +27,12 @@ class ComponentsController {
         const attributeName = `${eventName}-handler`;
         root.find(`[${attributeName}]`).each(function() {
             let element = $(this);
-
-            let componentName = ComponentBase.componentName(element);
-            let component = ComponentBase.getComponent(componentName);
+            let component = ComponentBase.getComponentByElement(element);
 
             let handlerName = element.attr(attributeName);
-            let handler = component[handlerName];
+            let handler = component[handlerName] ?? component.constructor[handlerName];
 
-            element.on(eventName, handler);
+            element.on(eventName, handler.bind(component));
             element.removeAttr(attributeName);
         });
     }
