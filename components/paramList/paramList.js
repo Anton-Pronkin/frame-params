@@ -1,28 +1,8 @@
-class ParamList extends ComponentBase {
-    #params;
-
+class ParamList extends ComponentList {
     constructor ({params}) {
         super({
-            name: "param-list"
+            name: "param-list",
+            items: params.map(param => new Param({param}))
         });
-
-        this.#params = params;
-    }
-
-    renderComponent() {
-        return this.#renderParams();
-    }
-
-    #renderParams() {
-        let params = "";
-        for (const param of this.#params) {
-            params += this.#renderParam(param);
-        }
-
-        return params;
-    }
-
-    #renderParam(param) {
-        return new Param({param}).render();
     }
 }

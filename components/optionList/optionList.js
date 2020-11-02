@@ -1,29 +1,9 @@
-class OptionList extends ComponentBase {
-    #options = null;
-
+class OptionList extends ComponentList {
     constructor ({options}) {
         super({
-            name: "option-list"
+            name: "option-list",
+            items: options.map(option => new Option({option}))
         });
-
-        this.#options = options;
-    }
-
-    renderComponent() {
-        return this.#renderOptions();
-    }
-
-    #renderOptions() {
-        let optionsHtml = "";
-        for (const option of this.#options) {
-            optionsHtml += this.#renderOption(option);
-        }
-
-        return optionsHtml;
-    }
-
-    #renderOption(option) {
-        return new Option({option}).render();
     }
 
     static getOptions(container) {

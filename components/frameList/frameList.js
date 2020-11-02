@@ -1,28 +1,8 @@
-class FrameList extends ComponentBase {
-    #frames;
-
+class FrameList extends ComponentList {
     constructor ({frames}) {
         super({
-            name: "frame-list"
+            name: "frame-list",
+            items: frames.map(frame => new Frame({frame}))
         });
-
-        this.#frames = frames;
-    }
-
-    renderComponent() {
-        return this.#renderFrames();
-    }
-
-    #renderFrames() {
-        let frames = "";
-        for (const frame of this.#frames) {
-            frames += this.#renderFrame(frame);
-        }
-
-        return frames;
-    }
-
-    #renderFrame(frame) {
-        return new Frame({frame}).render();
     }
 }
