@@ -24,7 +24,7 @@ let render = async () => {
         root: document.getElementById("options-content"),
         mainComponent:  new OptionPage({
             options: options, 
-            saveOptions: saveOptions
+            onSaveClick: saveOptions
         })
     });
 

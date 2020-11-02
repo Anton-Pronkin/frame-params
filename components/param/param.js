@@ -31,12 +31,12 @@ class Param extends ComponentBase {
             <div class="${this.bem(Param.#elements.container)}">
                 <div class="${this.bem(Param.#elements.name)} ${pamaNameModifier}" title=${name}>${name}</div>
                 <input class="${this.bem(Param.#elements.value)}" type="text" value=${value}></input>
-                <div class="${this.bem(Param.#elements.copyButton)}" click-handler="${Param.copyButtonClick.name}">Copy</div>
+                <div class="${this.bem(Param.#elements.copyButton)}" click-handler="${this.copyButtonClick.name}">Copy</div>
             </div>`;
     }
 
-    static copyButtonClick({target}) {
-        let text = $(target).prev().val();
+    copyButtonClick() {
+        let text = this.element(Param.#elements.value).val();
         navigator.clipboard.writeText(text).then(function() {
             window.close();
         });

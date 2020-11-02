@@ -5,7 +5,8 @@ class Option extends ComponentBase {
         params: "params"
     }
 
-    #option = null;
+    #option;
+    #checkbox;
 
     constructor ({option}) {
         super({
@@ -20,9 +21,18 @@ class Option extends ComponentBase {
     }
 
     #renderOption({caption, checked, name}) {
+        this.#checkbox = new Checkbox({caption, checked});
         return `
             <div class="${this.bem(Option.#elements.checkboxOption)}" option-name="${name}">
-                ${new Checkbox({caption, checked}).render()}
+                ${this.#checkbox.render()}
             </div>`;
+    }
+
+    getName() {
+        return this.#option.name;
+    }
+
+    getChecked() {
+        return this.#checkbox.getChecked();
     }
 }

@@ -11,13 +11,15 @@ class Frame extends ComponentBase {
     }
 
     #frame;
+    #onClick;
 
-    constructor ({frame}) {
+    constructor ({frame, onClick}) {
         super({
             name: "frame"
         });
 
         this.#frame = frame;
+        this.#onClick = onClick;
     }
 
     renderComponent() {
@@ -42,22 +44,26 @@ class Frame extends ComponentBase {
     }
 
     getTitleAttribute(params) {
-        return params.length ? `click-handler="${Frame.frameClick.name}"` : "";
+        return params.length ? `click-handler="${this.frameClick.name}"` : "";
     }
 
-    static frameClick({target}) {
-        const component = ComponentBase.componentName(target);
-        const expandedFrameClass = ComponentBase.bem(component, Frame.#elements.container, Frame.#modifiers.expanded);
+    toggle() {
+        let container = this.element(Frame.#elements.container);
+        container.toggleClass(this.bem(Frame.#elements.container, Frame.#modifiers.expanded));
 
-        const framesSelector = "." + ComponentBase.bem(component, Frame.#elements.container);
-        const paramsSelector = "." + ComponentBase.bem(component, Frame.#elements.params);
+        let params = this.element(Frame.#elements.params);
+        params.toggle("fast");
+    }
 
-        let currentFrame = $(target).parent();
-        currentFrame.toggleClass(expandedFrameClass);
-        currentFrame.find(paramsSelector).toggle("fast");
+    collapse() {
+        let container = this.element(Frame.#elements.container);
+        container.removeClass(this.bem(Frame.#elements.container, Frame.#modifiers.expanded));
 
-        let otherFrames = $(framesSelector).not(currentFrame);
-        otherFrames.removeClass(expandedFrameClass);
-        otherFrames.find(paramsSelector).hide("fast");
+        let params = this.element(Frame.#elements.params);
+        params.hide("fast");
+    }
+
+    frameClick() {
+        this.#onClick?.(this);
     }
 }

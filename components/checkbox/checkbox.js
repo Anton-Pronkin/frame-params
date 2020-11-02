@@ -26,10 +26,7 @@ class Checkbox extends ComponentBase {
             <span class="${this.bem(Checkbox.#elements.mark)}"></span>`;
     }
 
-    static getChecked(container) {
-        let component = ComponentBase.componentName(container);
-        let checkBoxSelector = "." + ComponentBase.bem(component, Checkbox.#elements.input);
-        
-        return $(container).find(checkBoxSelector).is(":checked");
+    getChecked() {
+        return this.element(Checkbox.#elements.input).is(":checked");
     }
 }

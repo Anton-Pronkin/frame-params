@@ -6,20 +6,10 @@ class OptionList extends ComponentList {
         });
     }
 
-    static getOptions(container) {
-        let optionNameAttribute = "option-name";
-
-        let options = [];
-        $(container).find(`[${optionNameAttribute}]`).each(function() {
-            let element = $(this);
-            let checkboxComponent = element.children()[0];
-
-            let name = element.attr(optionNameAttribute);
-            let checked = Checkbox.getChecked(checkboxComponent);
-
-            options.push({ name, checked });
-        });
-
-        return options;
+    getOptions() {
+        return this.items.map(option => ({
+            name: option.getName(),
+            checked: option.getChecked()
+        }));
     }
 }
