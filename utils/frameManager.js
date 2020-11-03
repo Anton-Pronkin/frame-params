@@ -9,12 +9,15 @@ class FrameManager {
             action: 'openPopup'
         };
 
-        let dirtyFrames = await chrome.tabs.sendMessage(tab, message);
-        if (!dirtyFrames) {
-            return null;
+        try
+        {
+            let dirtyFrames = await chrome.tabs.sendMessage(tab, message);
+            return await FrameManager.#generateFrames(dirtyFrames);
         }
-
-        return await FrameManager.#generateFrames(dirtyFrames);
+        catch
+        {
+            return [];
+        }
     }
 
     static async #generateFrames(dirtyFrames) {
