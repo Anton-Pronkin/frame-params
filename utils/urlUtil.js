@@ -1,6 +1,6 @@
 class UrlUtil {
     static *getParams(url) {
-        const paramSeparatorPattern = /[&\?]/;
+        const paramSeparatorPattern = /[#&\?]/;
 
         let urlParts = url.split(paramSeparatorPattern);
         for (const urlPart of urlParts) {
@@ -13,7 +13,7 @@ class UrlUtil {
     }
 
     static #parseParam(param) {
-        const nameValueSeparatorPattern = /[=#]/;
+        const nameValueSeparatorPattern = "=";
 
         let paramParts = param.split(nameValueSeparatorPattern);
         if (paramParts.length < 2)
@@ -29,7 +29,7 @@ class UrlUtil {
     }
 
     static getPage(url) {
-        const pagePattern = /.*:\/\/.*\/([^\?]*).*/;
+        const pagePattern = /.*:\/\/.*\/([^\?#]*).*/;
 
         let match = url.match(pagePattern);
         return match && match[1];
