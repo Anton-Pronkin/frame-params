@@ -46,6 +46,11 @@ class ComponentBase {
         return $(document).find(`#${this.#componentId}`);
     }
 
+    escape(text) {
+        const entityMap = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;' };
+        return text.replace(/[&<>"'`=\/]/g, s => entityMap[s]);;
+    }
+
     #generateUniqueId() {
         let regularId = ComponentBase.#componentsCount++;
         return `${ComponentBase.#componentIdPrefix}${this.#componentName}-${regularId}`;

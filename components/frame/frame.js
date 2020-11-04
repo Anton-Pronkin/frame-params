@@ -34,7 +34,7 @@ class Frame extends ComponentBase {
        
         return `
             <div class="${this.bem(Frame.#elements.container)} ${containerModifier}">
-                <div class="${this.bem(Frame.#elements.title)}" title=${tooltip} ${titleAttribute}>${title}</div>
+                <div class="${this.bem(Frame.#elements.title)}" title="${this.escape(tooltip)}" ${titleAttribute}>${this.escape(title)}</div>
                 <div class="${this.bem(Frame.#elements.params)}">${paramList.render()}</div>
             </div>`;
     }
