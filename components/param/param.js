@@ -29,8 +29,8 @@ class Param extends ComponentBase {
 
         return `
             <div class="${this.bem(Param.#elements.container)}">
-                <div class="${this.bem(Param.#elements.name)} ${pamaNameModifier}" title=${name}>${name}</div>
-                <input class="${this.bem(Param.#elements.value)}" type="text" value=${value}></input>
+                <div class="${this.bem(Param.#elements.name)} ${pamaNameModifier}" title="${this.escape(name)}">${this.escape(name)}</div>
+                <input class="${this.bem(Param.#elements.value)}" type="text" value="${this.escape(value)}"></input>
                 <div class="${this.bem(Param.#elements.copyButton)}" click-handler="${this.copyButtonClick.name}">Copy</div>
             </div>`;
     }

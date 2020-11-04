@@ -21,7 +21,7 @@ class Checkbox extends ComponentBase {
         let checkedAttribute = this.#checked ? "checked" : "";
 
         return `
-            <span>${this.#caption}</span>
+            <span>${this.escape(this.#caption)}</span>
             <input class="${this.bem(Checkbox.#elements.input)}" type="checkbox" ${checkedAttribute}>
             <span class="${this.bem(Checkbox.#elements.mark)}"></span>`;
     }
