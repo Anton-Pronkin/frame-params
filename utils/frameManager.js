@@ -6,7 +6,7 @@ class FrameManager {
 
     static async #getFramesForTab(tab) {
         let message = {  
-            action: 'openPopup'
+            action: 'getFramesInfo'
         };
 
         try
