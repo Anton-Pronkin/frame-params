@@ -13,10 +13,12 @@
         "default_popup": "popup.html"
     },
     "content_scripts": [{
+        "all_frames": true,
+        "match_about_blank": true,
         "matches": ["*://*/*"],
         "js": ["scripts/content.js"]
       }],
-    "permissions": ["tabs", "storage"], 
+    "permissions": ["tabs", "storage", "webNavigation"], 
     "options_ui": {
       "page": "options.html",
       "open_in_tab": false

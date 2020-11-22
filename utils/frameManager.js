@@ -1,39 +1,41 @@
 class FrameManager {
     static async getFrames() {
         let currentTabId = await FrameManager.#getCurrentTabId();
-        return await FrameManager.#getFramesForTab(currentTabId);
+        return await FrameManager.#generateFramesForTab(currentTabId);
     }
 
-    static async #getFramesForTab(tab) {
-        let message = {  
-            action: 'getFramesInfo'
+    static async #generateFramesForTab(tabId) {
+        let frames = await chrome.webNavigation.getAllFrames({tabId});
+        return await FrameManager.#generateFramesInfo(tabId, frames);
+    }
+
+    static async #generateFramesInfo(tabId, frames) {
+        return Promise.all(frames
+            .filter(frame => !frame.errorOccurred)
+            .map(async frame => await FrameManager.#generateFrameInfo(tabId, frame)));
+    }   
+
+    static async #generateFrameInfo(tabId, {frameId, url}) {
+        const title = await FrameManager.#getFrameTitle(tabId, frameId);
+        const page = UrlUtil.getPage(url);
+        const params = Array.from(UrlUtil.getParams(url));
+
+        return {title, page, params};
+    }   
+
+    static async #getFrameTitle(tabId, frameId) {
+        const message = {
+            action: 'getTitle'
         };
 
-        try
-        {
-            let dirtyFrames = await chrome.tabs.sendMessage(tab, message);
-            return await FrameManager.#generateFrames(dirtyFrames);
+        try {
+            return await chrome.tabs.sendMessage(tabId, message, {frameId});
         }
-        catch
-        {
-            return [];
+        catch {
+            // Cannot access to tab content.
+            return null;
         }
     }
-
-    static async #generateFrames(dirtyFrames) {
-        let frames = []; 
-
-        for (const dirtyFrame of dirtyFrames) {
-            frames.push({
-                title: dirtyFrame.title,
-                page: UrlUtil.getPage(dirtyFrame.url),
-                params: Array.from(UrlUtil.getParams(dirtyFrame.url))
-            });
-        }
-
-        return frames;
-    }
-    
 
     static async #getCurrentTabId() {
         const tabsQuery = { 
