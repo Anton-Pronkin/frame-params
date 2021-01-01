@@ -1,0 +1,16 @@
+{
+  "name": "frame-params",
+  "version": "0.1.0",
+  "description": "Take a look at the query parameters for all frames on the page.",
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonPronkin/frame-params.git"
+  },
+  "author": "Anton Pronkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonPronkin/frame-params/issues"
+  },
+  "homepage": "https://github.com/AntonPronkin/frame-params#readme"
+}
