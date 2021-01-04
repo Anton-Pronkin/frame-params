@@ -23,5 +23,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "app/scripts/"),
     filename: "[name].min.js"
-  }
+  },
+  devtool: 'cheap-module-source-map'
 };
