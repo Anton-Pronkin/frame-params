@@ -1,10 +1,10 @@
-class UrlUtil {
+export default class UrlUtil {
     static *getParams(url) {
-        const paramSeparatorPattern = /[#&\?]/;
+        const paramSeparatorPattern = /[&\?]/;
 
         let urlParts = url.split(paramSeparatorPattern);
         for (const urlPart of urlParts) {
-            let {isCorrect, name, value} = UrlUtil.#parseParam(urlPart);
+            let {isCorrect, name, value} = UrlUtil.parseParam(urlPart);
 
             if (isCorrect) {
                 yield { name, value }
@@ -12,7 +12,7 @@ class UrlUtil {
         }
     }
 
-    static #parseParam(param) {
+    static parseParam(param) {
         const nameValueSeparatorPattern = "=";
 
         let paramParts = param.split(nameValueSeparatorPattern);

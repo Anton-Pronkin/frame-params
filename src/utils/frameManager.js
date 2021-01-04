@@ -1,29 +1,32 @@
-class FrameManager {
+import "chrome-extension-async";
+import UrlUtil from "./urlUtil";
+
+export default class FrameManager {
     static async getFrames() {
-        let currentTabId = await FrameManager.#getCurrentTabId();
-        return await FrameManager.#generateFramesForTab(currentTabId);
+        let currentTabId = await FrameManager.getCurrentTabId();
+        return await FrameManager.generateFramesForTab(currentTabId);
     }
 
-    static async #generateFramesForTab(tabId) {
+    static async generateFramesForTab(tabId) {
         let frames = await chrome.webNavigation.getAllFrames({tabId});
-        return await FrameManager.#generateFramesInfo(tabId, frames);
+        return await FrameManager.generateFramesInfo(tabId, frames);
     }
 
-    static async #generateFramesInfo(tabId, frames) {
+    static async generateFramesInfo(tabId, frames) {
         return Promise.all(frames
             .filter(frame => !frame.errorOccurred)
-            .map(async frame => await FrameManager.#generateFrameInfo(tabId, frame)));
+            .map(async frame => await FrameManager.generateFrameInfo(tabId, frame)));
     }   
 
-    static async #generateFrameInfo(tabId, {frameId, url}) {
-        const title = await FrameManager.#getFrameTitle(tabId, frameId);
+    static async generateFrameInfo(tabId, {frameId, url}) {
+        const title = await FrameManager.getFrameTitle(tabId, frameId);
         const page = UrlUtil.getPage(url);
         const params = Array.from(UrlUtil.getParams(url));
 
-        return {title, page, params};
+        return {frameId, title, page, params};
     }   
 
-    static async #getFrameTitle(tabId, frameId) {
+    static async getFrameTitle(tabId, frameId) {
         const message = {
             action: 'getTitle'
         };
@@ -37,7 +40,7 @@ class FrameManager {
         }
     }
 
-    static async #getCurrentTabId() {
+    static async getCurrentTabId() {
         const tabsQuery = { 
             currentWindow: true, 
             active: true
