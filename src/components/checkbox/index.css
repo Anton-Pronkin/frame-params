@@ -38,11 +38,11 @@
     background-color: var(--secondary-color);
 }
 
-.checkbox .checkbox__input:checked ~ .checkbox__mark {
+.checkbox .checkbox__input[checked]~ .checkbox__mark {
     background-color: var(--pattern-color);
 }
 
-.checkbox .checkbox__input:checked ~ .checkbox__mark:after {
+.checkbox .checkbox__input[checked] ~ .checkbox__mark:after {
     display: block;
 }
 

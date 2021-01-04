@@ -53,5 +53,14 @@
 }
 
 .frame__params {
-    display: none;
+    opacity: 0;
+    transform: scaleY(0) translateY(-50%);
+    max-height: 0;
+    transition: opacity 0.1s, transform 0.2s;  
+}
+
+.frame__container--expanded .frame__params {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    max-height: none;
 }

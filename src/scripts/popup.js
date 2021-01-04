@@ -1,13 +1,5 @@
-let render = async () => {
-    const frameInfo = await FrameManager.getFrames();
-    const frames = await FramePreparer.process(frameInfo);
+import React from "react";
+import ReactDOM from "react-dom";
+import FramePage from "../components/framePage"
 
-    const controller = new ComponentsController({
-        root: document.getElementById("popup-content"),
-        mainComponent: new FramePage({frames})
-    });
-
-    controller.renderComponents();
-};
-
-render();
+ReactDOM.render(<FramePage />, document.getElementById("root"));

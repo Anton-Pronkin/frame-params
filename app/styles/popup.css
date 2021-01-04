@@ -1,12 +1,18 @@
 :root {
     --pattern-color: rgb(67, 136, 182);
-    --secondary-color: rgb(95, 161, 204);
     --light-color: rgb(238, 248, 255);
     --dark-color: rgb(47, 85, 134);
 
     --primary-font-family: 'Titillium Web', sans-serif;
 }
 
+::-webkit-scrollbar { 
+    width: 0;
+}
+
 body {
-    width: 500px;
+    font-family: var(--primary-font-family);
+    font-size: 1rem;
+    min-width: 395px;
+    width: 395px;
 }
