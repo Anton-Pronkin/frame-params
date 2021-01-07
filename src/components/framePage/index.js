@@ -10,7 +10,7 @@ export default class FramePage extends React.Component {
         this.state = {
             loaded: false,
             frames: null
-        }
+        };
     }
 
     async componentDidMount() {
@@ -25,13 +25,13 @@ export default class FramePage extends React.Component {
 
     render() {
         if (!this.state.loaded) {
-            return <div className="frame-page__loading">Loading...</div>;
+            return <div className="frame-page__loading">Loading...</div>
         }
 
         if (this.state.frames.length) {
             return <FrameList frames={this.state.frames}/>
         }
 
-        return <span className="frame-page__empty-message">Page does not contan frames with params</span>;
+        return <span className="frame-page__empty-message">Page does not contan frames with params</span>
     }
 }

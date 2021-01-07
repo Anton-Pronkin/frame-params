@@ -3,7 +3,7 @@ import OptionManager from "../../utils/optionManager";
 import OptionPreparer from "../../utils/optionPreparer";
 import OptionsDescription from "../../utils/optionsDescription";
 import OptionList from "../optionList";
-import "./index.css"
+import "./index.css";
 
 export default class OptionPage extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ export default class OptionPage extends React.Component {
         this.state = {
             loaded: false,
             options: null
-        }
+        };
     }
 
     async componentDidMount() {

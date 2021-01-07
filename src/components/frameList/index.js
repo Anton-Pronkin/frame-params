@@ -1,12 +1,12 @@
 import React from "react";
-import Frame from "../frame"
+import Frame from "../frame";
 
 export default class FrameList extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             expandedFrames: []
-        }
+        };
     }
 
     render() {

@@ -7,7 +7,7 @@ export default class Param extends React.Component {
         super(props);
         this.state = {
             paramValue: ""
-        }
+        };
     }
 
     render() {

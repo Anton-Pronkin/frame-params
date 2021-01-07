@@ -1,3 +1,4 @@
 node_modules/
 
 app/scripts/*.min.js
+app/scripts/*.min.js.map

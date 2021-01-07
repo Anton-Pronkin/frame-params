@@ -1,6 +1,6 @@
 import React from "react";
 import ParamList from "../paramList";
-import classnames from "classnames"
+import classnames from "classnames";
 import "./frame.css";
 
 export default function Frame(props) {
@@ -18,7 +18,8 @@ export default function Frame(props) {
             <div className="frame__params">
                 <ParamList params={props.frame.params} />
             </div>   
-        </div>);
+        </div>
+    );
 
     function frameClick() {
         if (this.props.frame.params.lemgth) {
