@@ -22,7 +22,7 @@ export default function Frame(props) {
     );
 
     function frameClick() {
-        if (this.props.frame.params.lemgth) {
+        if (props.frame.params.length) {
             props.onFrameClick?.();
         }
     }
