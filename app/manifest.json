@@ -16,7 +16,7 @@
         "all_frames": true,
         "match_about_blank": true,
         "matches": ["*://*/*"],
-        "js": ["scripts/content.js"]
+        "js": ["scripts/content.min.js"]
       }],
     "permissions": ["tabs", "storage", "webNavigation"], 
     "options_ui": {

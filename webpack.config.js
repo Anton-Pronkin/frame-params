@@ -3,7 +3,8 @@ const path = require("path");
 module.exports = {
   entry: {
       popup: "./src/scripts/popup.js",
-      options: "./src/scripts/options.js"
+      options: "./src/scripts/options.js",
+      content: "./src/scripts/content.js",
   },
   mode: "development",
   module: {
